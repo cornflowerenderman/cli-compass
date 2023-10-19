@@ -1,0 +1,10 @@
+{
+  "cookies": {
+    "ASP.NET_SessionId": "deadbeef-1234-6789-abcd-deaddeaddead",
+    "cpsdid": "deaddead-aaaa-bbbb-cccc-ddddeeeeffff"
+  },
+  "headers": {
+    "User-Agent": "Mozilla/5.0 (Linux; Android 11; SM-G900I Build/RQ3A.211001.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/116.0.0.0 Mobile Safari/537.36 Android/1859 (Compass Education)"
+  },
+  "school": "<redacted>-vic"
+}
