@@ -35,6 +35,11 @@ def printSchedule(date,userId):
 
 print(Fore.LIGHTMAGENTA_EX+"CLI Compass (https://github.com/cornflowerenderman/cli-compass)"+Style.RESET_ALL)
 print(Style.BRIGHT+Fore.LIGHTRED_EX+"This version is probably buggy! Use at your own risk"+Style.RESET_ALL)
+
+valid = compassLib.testIfValidSession(compassLib.urlPrefix,compassLib.cookies,compassLib.headers)
+if(valid==False):
+    raise Exception("Could not authenticate! Check config.json")
+
 print(Fore.LIGHTMAGENTA_EX)
 userId = compassLib.getUserId()
 print(Style.RESET_ALL)
