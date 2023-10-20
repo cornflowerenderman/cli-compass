@@ -1,9 +1,13 @@
 import requests, json, datetime, pytz
 
-config = json.loads(open("config.json","r").read())
+try:
+    config = json.loads(open("../config.json","r").read()) #Read from parent folder if present
+except:
+    config = json.loads(open("config.json","r").read()) #Read from current folder
 cookies = config['cookies']
 headers = config['headers']
 school = config['school']
+
 if(school == ""):
     raise Exception("You must set school in config.json")
 urlPrefix = "https://"+school+".compass.education"
