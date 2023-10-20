@@ -1,0 +1,2 @@
+pytz>=2023.3.post1-1
+colorama>=0.4.6-2
