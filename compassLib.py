@@ -6,6 +6,18 @@ headers = config['headers']
 school = config['school']
 urlPrefix = "https://"+school+".compass.education"
 
+def testIfValidSession(urlPrefix,cookies,headers):
+    r = requests.post(urlPrefix+"/services/mobile.svc/TestAuth",json="",cookies=cookies,headers=headers)
+    if(r.ok):
+        return json.loads(r.text)['d']['success']
+    else:
+        if(r.status_code == 500): #Likely expired/invalid ASP.NET_SessionId cookie
+            return False
+        elif(r.status_code == 403): #Likely bot detection, check User-Agent
+            return False
+        else: #Unknown response
+            raise Exception(r)
+
 def getUserId():
     if(cookies==None):
         raise("Cookies not set")
