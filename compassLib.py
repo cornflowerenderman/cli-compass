@@ -4,9 +4,13 @@ config = json.loads(open("config.json","r").read())
 cookies = config['cookies']
 headers = config['headers']
 school = config['school']
+if(school == ""):
+    raise Exception("You must set school in config.json")
 urlPrefix = "https://"+school+".compass.education"
 
 def testIfValidSession(urlPrefix,cookies,headers):
+    if(len(cookies['ASP.NET_SessionId'])!=36): #User has not set valid UUID
+        return False
     r = requests.post(urlPrefix+"/services/mobile.svc/TestAuth",json="",cookies=cookies,headers=headers)
     if(r.ok):
         return json.loads(r.text)['d']['success']
