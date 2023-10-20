@@ -1,6 +1,6 @@
 # cli-compass
 
-Command line based Compass Education client
+Unofficial Command line based Compass Education client
 
 ## Installation
 
@@ -25,7 +25,6 @@ To install run the following commands:
 ## TODO
     
     -  Better exception handling
-    -  Add the ability to automatically find the required cookie from your browser
     -  Add latest news entries (/services/mobile.svc/GetNewsFeedPaged)
     -  Add learning tasks being shown on schedule
     -  Add events & chronicle entries

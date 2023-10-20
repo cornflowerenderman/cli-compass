@@ -39,7 +39,20 @@ print(Style.BRIGHT+Fore.LIGHTRED_EX+"This version is probably buggy! Use at your
 
 valid = compassLib.testIfValidSession(compassLib.urlPrefix,compassLib.cookies,compassLib.headers)
 if(valid==False):
-    raise Exception("Could not authenticate! Check config.json")
+    print("config.json is invalid, trying to get cookies from browser")
+    compassLib.cookies = compassLib.getCookieFromBrowser(compassLib.school)
+    if(compassLib.cookies==None):
+        raise Exception("Could not authenticate! Fix config.json or log in on browser")
+    else:
+        valid = compassLib.testIfValidSession(compassLib.urlPrefix,compassLib.cookies,compassLib.headers)
+        if(valid):
+            print("Got valid cookies, updating config")
+            config = {"cookies":compassLib.cookies,"headers":compassLib.headers,"school":compassLib.school}
+            f = open("../config.json","w")
+            f.write(json.dumps(config))
+            f.close()
+        else:
+            raise Exception("Could not authenticate! Check config.json or log in again on browser")
 
 print(Fore.LIGHTMAGENTA_EX)
 userId = compassLib.getUserId()

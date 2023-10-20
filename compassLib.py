@@ -1,4 +1,16 @@
 import requests, json, datetime, pytz
+import browser_cookie3
+
+def getCookieFromBrowser(school):
+    try:
+        cookiejar = browser_cookie3.load(domain_name=school+".compass.education")
+        cookies = {}
+        for i in cookiejar:
+            if(i.name == "ASP.NET_SessionId"):
+                cookies[i.name] = i.value
+        return cookies
+    except:
+        return None
 
 try:
     config = json.loads(open("../config.json","r").read()) #Read from parent folder if present
@@ -10,6 +22,8 @@ school = config['school']
 
 if(school == ""):
     raise Exception("You must set school in config.json")
+
+
 urlPrefix = "https://"+school+".compass.education"
 
 def testIfValidSession(urlPrefix,cookies,headers):
