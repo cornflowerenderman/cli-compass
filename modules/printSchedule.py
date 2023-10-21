@@ -1,8 +1,13 @@
+import datetime
 from colorama import Fore, Style
-
 from modules.timeConversion import unixToShortTime
 
-def printSchedule(urlPrefix, schedule):
+def printSchedule(urlPrefix, date, schedule):
+    today = datetime.date.today()
+    if(date==today):
+        print(Fore.LIGHTCYAN_EX+"Today's schedule:"+Style.RESET_ALL)
+    else:
+        print(Fore.LIGHTCYAN_EX+date.strftime("%A")+"'s schedule:"+Style.RESET_ALL)
     if(len(schedule)>0):
         widest = 1
         for i in schedule:
@@ -25,3 +30,4 @@ def printSchedule(urlPrefix, schedule):
                 print(entryColour+(startLetter+'{:8} | {:8} - {:3} - {:'+str(teacherWidth)+'} | {:>4}').format(*stuff)+Style.RESET_ALL)
     else:
         print("  [Nothing]")
+    print()

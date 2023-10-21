@@ -31,7 +31,6 @@ To install run the following commands:
 ## TODO
     
     -  Better exception handling
-    -  Add latest news entries (/services/mobile.svc/GetNewsFeedPaged)
     -  Add learning tasks being shown on schedule
     -  Add events & chronicle entries
     -  More goals?

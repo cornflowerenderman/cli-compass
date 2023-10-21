@@ -20,3 +20,4 @@ def printAttendance(attendance):
         print("  "+(" - ".join(temp)))
     else:
         print("  [No roll]")
+    print()

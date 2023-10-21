@@ -30,3 +30,6 @@ def findNextWeekday(day):     #Accepts a datetime object
 def unixToShortTime(unix): #Accepts unix time and returns the time in format "HH:MM AM"
     return datetime.datetime.fromtimestamp(unix).strftime('%I:%M %p')
 
+def unixToTime(unix): #Accepts unix time and returns the time in format "DD Mmm HH:MM AM"
+    return datetime.datetime.fromtimestamp(unix).strftime('%d %b, %I:%M %p')
+

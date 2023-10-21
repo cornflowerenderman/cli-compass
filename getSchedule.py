@@ -1,7 +1,17 @@
 #!/bin/python3
+import sys
+import datetime
+
+args = sys.argv[1:]
+#--nerd enables extra information
+#--no-schedule disables schedule
+#--no-attendance disables attendance
+#--no-auth-test disables testing if valid login (not recommended)
+#--no-user-id disables finding user-id (will break stuff)
+#--news enables news (semi-expensive)
+#--news-max 3 sets max news entries (can sometimes increase speed by reducing required request count)
 
 try:
-    import datetime
     from colorama import Fore, Style
 except:
     raise Exception("Missing dependency: colorama")
@@ -19,6 +29,8 @@ from modules.getUserInfo import getUserInfo
 from modules.timeConversion import findNextWeekday
 from modules.printAttendance import printAttendance
 from modules.printSchedule import printSchedule
+from modules.getNews import getAllNews
+from modules.printNews import printNews
 
 config = getConfig()
 cookies = config['cookies']
@@ -26,31 +38,39 @@ headers = config['headers']
 
 urlPrefix = "https://"+config['school']+".compass.education"
 
-valid = testAuth(urlPrefix,cookies,headers)
-if(valid==False):
-    raise Exception("Could not authenticate! Fix config.json or log in on browser")
+if("--no-auth-test" not in args):
+    valid = testAuth(urlPrefix,cookies,headers)
+    if(valid==False):
+        raise Exception("Could not authenticate! Fix config.json or log in on browser")
 
-userInfo = getUserInfo(urlPrefix, cookies, headers)
-userId = userInfo['userId'] #Key piece of information for most requests
+userId = None
+if("--no-user-id" not in args):
+    userInfo = getUserInfo(urlPrefix, cookies, headers)
+    userId = userInfo['userId'] #Key piece of information for most requests
+    userInfoPrintText = "Logged in as "+userInfo['name']+" ("+userInfo['username']
+    if("--nerd" in args):
+        userInfoPrintText+=", "+str(userInfo['userId']) #--nerd enables UserID to be shown
+    print(Fore.LIGHTMAGENTA_EX+userInfoPrintText+")"+Style.RESET_ALL)
+    print()
 
+if("--no-attendance" not in args):
+    attendance = getAttendance(urlPrefix, cookies, headers, userId)
+    printAttendance(attendance)
 
-print(Fore.LIGHTMAGENTA_EX+"Logged in as "+userInfo['name']+" ("+userInfo['username']+", User ID: "+str(userInfo['userId'])+")"+Style.RESET_ALL)
-print()
+if("--no-schedule" not in args):
+    today = datetime.date.today()
+    schedule = getSchedule(urlPrefix,cookies,headers,today,userId)
+    printSchedule(urlPrefix, today, schedule)
+    next_day = findNextWeekday(today)
+    schedule = getSchedule(urlPrefix,cookies,headers,next_day,userId)
+    printSchedule(urlPrefix, next_day, schedule)
 
-attendance = getAttendance(urlPrefix, cookies, headers, userId)
-printAttendance(attendance)
-print()
-
-today = datetime.date.today()
-next_day = findNextWeekday(today)
-
-print(Fore.LIGHTCYAN_EX+"Today's schedule:"+Style.RESET_ALL)
-
-schedule = getSchedule(urlPrefix,cookies,headers,today,userId)
-printSchedule(urlPrefix, schedule)
-
-print()
-print(Fore.LIGHTCYAN_EX+"Next school day:"+Style.RESET_ALL)
-schedule = getSchedule(urlPrefix,cookies,headers,next_day,userId)
-printSchedule(urlPrefix, schedule)
-print()
+if("--news" in args):
+    maxEntries = -1
+    if("--news-max" in args):
+        try:
+            maxEntries = int(args[args[:-1].index('--news-max')+1])
+        except:
+            pass
+    newsEntries = getAllNews(urlPrefix, cookies, headers, maxEntries)
+    printNews(newsEntries)
