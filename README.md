@@ -28,9 +28,24 @@ To install run the following commands:
     $ python3 getSchedule.py
 ```
 
+## Command line options
+
+Features can be enabled or disabled by using different command line switches:
+    --help:                 Shows help page (not implemented)
+    --show-learning-tasks:  Shows learning tasks (not implemented, time expensive)
+    --show-chronicles:      Shows chronicles (not implemented)
+    --show-events:          Shows events (not implemented)
+    --nerd:                 Shows extra information that is useless to the average user
+    --no-schedule:          Disables schedule
+    --no-attendance:        Disables attendance
+    --no-auth-test:         Disables testing if valid login (not recommended)
+    --no-user-id:           Disables finding user-id (will break stuff, don't use)
+    --show-news:            Enables news (semi time expensive)
+    --news-max n:           Sets max news entries (can sometimes increase speed)
+
 ## TODO
     
-    -  Better exception handling
+    -  Better exception handling (mostly complete)
     -  Add learning tasks being shown on schedule
     -  Add events & chronicle entries
     -  More goals?

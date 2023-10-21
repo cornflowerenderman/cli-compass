@@ -2,14 +2,7 @@
 import sys
 import datetime
 
-args = sys.argv[1:]
-#--nerd enables extra information
-#--no-schedule disables schedule
-#--no-attendance disables attendance
-#--no-auth-test disables testing if valid login (not recommended)
-#--no-user-id disables finding user-id (will break stuff)
-#--news enables news (semi-expensive)
-#--news-max 3 sets max news entries (can sometimes increase speed by reducing required request count)
+args = sys.argv[1:] #Command line switches
 
 try:
     from colorama import Fore, Style
@@ -65,7 +58,7 @@ if("--no-schedule" not in args):
     schedule = getSchedule(urlPrefix,cookies,headers,next_day,userId)
     printSchedule(urlPrefix, next_day, schedule)
 
-if("--news" in args):
+if("--show-news" in args):
     maxEntries = -1
     if("--news-max" in args):
         try:
