@@ -1,5 +1,8 @@
 import json
-import browser_cookie3
+try:
+    import browser_cookie3
+except:
+    raise Exception("Missing browser-cookie3 dependency")
 
 #This is a reasonably generic User-Agent that doesn't instantly set off anti-bot detection
 #The default of python-requests/2.25.1 results in 403 (forbidden) errors
@@ -7,12 +10,12 @@ userAgent = "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/11
 
 def getCookieFromBrowser(school):
     try:
-        cookiejar = browser_cookie3.load(domain_name=school+".compass.education")
+        cookiejar = browser_cookie3.load(domain_name=school+".compass.education") #Get browser cookie jar
         cookies = {}
         for i in cookiejar:
-            if(i.name == "ASP.NET_SessionId"):
+            if(i.name == "ASP.NET_SessionId"): #Magic cookie
                 cookies[i.name] = i.value
-        if(cookies=={}):
+        if(cookies=={}): #Didn't find cookie
             return None
         return cookies
     except:
@@ -25,7 +28,7 @@ def askSchoolName():
         school = input("Enter school name: ")
         if("://" in school): #Url pasted
             school = school.split("://")[1]
-        if("." in school):
+        if("." in school): #Url pasted
             school = school.split(".")[0]
         if(len(school)>0):
             print("Is this correct? https://"+school+".compass.education/")
@@ -36,13 +39,13 @@ def askSchoolName():
             print("You did not enter a valid school name or url")
     raise Exception("User isn't following simple instructions")
     
-def updateConfig(config):
+def updateConfig(config): #Overwrites config with new values
     f = open("config.json","w")
     f.write(json.dumps(config))
     f.close()
 
 
-def getConfig():
+def getConfig(): #This function is a bit of a mess
     #First look for config.json in current folder, then parent
     config = {}
     try:

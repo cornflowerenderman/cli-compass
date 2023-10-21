@@ -1,31 +1,35 @@
-import colorama
-from colorama import Fore, Style
+#!/bin/python3
 
-print(Fore.LIGHTMAGENTA_EX+"CLI Compass (https://github.com/cornflowerenderman/cli-compass)"+Style.RESET_ALL)
-print(Style.BRIGHT+Fore.LIGHTRED_EX+"This version is probably buggy! Use at your own risk"+Style.RESET_ALL)
+import requests, json, datetime     #Built-in libraries
 
-import compassLib
-from modules.getConfig import getConfig
+try:
+    from modules.getConfig import getConfig
+    from modules.authTest import testAuth
+    from modules.getAttendance import getAttendance
+    from modules.getSchedule import getSchedule
+    from modules.getUserInfo import getUserInfo
+    from modules.timeConversion import findNextWeekday
+except:
+    raise Exception("Missing sub-components, try redownloading this project")
+
+try:
+    import colorama     #For terminal colouring
+    from colorama import Fore, Style
+except:
+    raise Exception("Missing dependency: colorama")
+
+print(Fore.LIGHTMAGENTA_EX+"Unofficial CLI Compass Education Client (https://github.com/cornflowerenderman/cli-compass)"+Style.RESET_ALL)
+print(Style.BRIGHT+Fore.LIGHTRED_EX+"This version is probably buggy! Use at your own risk!")
+print("We will not be responsible for any issues that may arise from using this client!"+Style.RESET_ALL)
 
 config = getConfig()
-compassLib.cookies = config['cookies']
-compassLib.headers = config['headers']
-school = config['school']
+cookies = config['cookies']
+headers = config['headers']
 
-compassLib.urlPrefix = "https://"+school+".compass.education"
-
-
-
-import datetime, json
-
-def findNextSchoolDay(day):
-    next_day = day + datetime.timedelta(days=1)
-    while next_day.weekday() >= 5:
-        next_day += datetime.timedelta(days=1)
-    return next_day
+urlPrefix = "https://"+config['school']+".compass.education"
 
 def printSchedule(date,userId):
-    schedule = compassLib.getSchedule(date,userId)
+    schedule = getSchedule(urlPrefix,cookies,headers,date,userId)
     if(len(schedule)>0):
         widest = 1
         for i in schedule:
@@ -36,7 +40,7 @@ def printSchedule(date,userId):
         schedule[4]['rollMarked'] = False
         for i in schedule:
             start = datetime.datetime.fromtimestamp(i['start']).strftime('%I:%M %p')
-            url = compassLib.urlPrefix+"/Organise/Activities/Activity.aspx#session/"+i['id']
+            url = urlPrefix+"/Organise/Activities/Activity.aspx#session/"+i['id']
             startLetter = '# ' if i['type']==1 else '  '
             if("info" in i):
                 info = i['info']
@@ -49,15 +53,18 @@ def printSchedule(date,userId):
     else:
         print("  [Nothing]")
 
-valid = compassLib.testIfValidSession(compassLib.urlPrefix,compassLib.cookies,compassLib.headers)
+valid = testAuth(urlPrefix,cookies,headers)
+
 if(valid==False):
     raise Exception("Could not authenticate! Fix config.json or log in on browser")
 
 print(Fore.LIGHTMAGENTA_EX)
-userId = compassLib.getUserId()
+userInfo = getUserInfo(urlPrefix, cookies, headers)
+print("Logged in as "+userInfo['name']+" ("+userInfo['username']+", "+str(userInfo['userId'])+")")
+userId = userInfo['userId']
 print(Style.RESET_ALL)
 
-attendance = compassLib.getAttendance(userId)
+attendance = getAttendance(urlPrefix, cookies, headers, userId)
 if(len(attendance)>0):
     print(Fore.LIGHTCYAN_EX+"Today's attendance:"+Style.RESET_ALL)
     temp = []
@@ -75,7 +82,7 @@ if(len(attendance)>0):
 
 
 today = datetime.date.today()
-tommorrow = findNextSchoolDay(today)
+tommorrow = findNextWeekday(today)
 
 print(Fore.LIGHTCYAN_EX+"Today's schedule:"+Style.RESET_ALL)
 printSchedule(today,userId)
