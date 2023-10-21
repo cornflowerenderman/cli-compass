@@ -42,6 +42,7 @@ Features can be enabled or disabled by using different command line switches:
     --no-user-id:           Disables finding user-id (will break stuff, don't use)
     --show-news:            Enables news (semi time expensive)
     --news-max n:           Sets max news entries (can sometimes increase speed)
+    --no-fancy-links:       Disables web-style links (Use if not supported by your terminal)
 
 ## TODO
     

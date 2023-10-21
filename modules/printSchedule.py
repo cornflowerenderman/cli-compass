@@ -1,6 +1,10 @@
 import datetime
 from colorama import Fore, Style
 from modules.timeConversion import unixToShortTime
+from modules.printLink import getFancyLink
+
+import sys
+args = sys.argv[1:]
 
 def printSchedule(urlPrefix, date, schedule):
     today = datetime.date.today()
@@ -19,6 +23,8 @@ def printSchedule(urlPrefix, date, schedule):
         for i in schedule:
             start = unixToShortTime(i['start'])
             url = urlPrefix+"/Organise/Activities/Activity.aspx#session/"+i['id'] #Convert sessionId to clickable URL
+            if("--no-fancy-links" not in args):
+                url = "Session ID: "+getFancyLink(i['id'],url)
             startLetter = '# ' if i['type']==1 else '  '
             if("info" in i):
                 info = i['info']
