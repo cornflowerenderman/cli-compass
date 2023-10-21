@@ -31,17 +31,19 @@ To install run the following commands:
 ## Command line options
 
 Features can be enabled or disabled by using different command line switches:
-    --help:                 Shows help page (not implemented)
-    --show-learning-tasks:  Shows learning tasks (not implemented, time expensive)
-    --show-chronicles:      Shows chronicles (not implemented)
-    --show-events:          Shows events (not implemented)
-    --nerd:                 Shows extra information that is useless to the average user
-    --no-schedule:          Disables schedule
-    --no-attendance:        Disables attendance
-    --no-auth-test:         Disables testing if valid login (not recommended)
-    --no-user-id:           Disables finding user-id (will break stuff, don't use)
-    --show-news:            Enables news (semi time expensive)
-    --news-max n:           Sets max news entries (can sometimes increase speed)
+```
+ --help:                 Shows help page (not implemented)
+ --show-learning-tasks:  Shows learning tasks (not implemented, time expensive)
+ --show-chronicles:      Shows chronicles (not implemented)
+ --show-events:          Shows events (not implemented)
+ --nerd:                 Shows extra information that is useless to the average user
+ --no-schedule:          Disables schedule
+ --no-attendance:        Disables attendance
+ --no-auth-test:         Disables testing if valid login (not recommended)
+ --no-user-id:           Disables finding user-id (will break stuff, don't use)
+ --show-news:            Enables news (semi time expensive)
+ --news-max n:           Sets max news entries (can sometimes increase speed)
+```
 
 ## TODO
     
