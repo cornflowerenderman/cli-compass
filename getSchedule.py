@@ -1,7 +1,22 @@
-import compassLib
-
-import datetime, colorama, json
+import colorama
 from colorama import Fore, Style
+
+print(Fore.LIGHTMAGENTA_EX+"CLI Compass (https://github.com/cornflowerenderman/cli-compass)"+Style.RESET_ALL)
+print(Style.BRIGHT+Fore.LIGHTRED_EX+"This version is probably buggy! Use at your own risk"+Style.RESET_ALL)
+
+import compassLib
+from modules.getConfig import getConfig
+
+config = getConfig()
+compassLib.cookies = config['cookies']
+compassLib.headers = config['headers']
+school = config['school']
+
+compassLib.urlPrefix = "https://"+school+".compass.education"
+
+
+
+import datetime, json
 
 def findNextSchoolDay(day):
     next_day = day + datetime.timedelta(days=1)
@@ -34,25 +49,9 @@ def printSchedule(date,userId):
     else:
         print("  [Nothing]")
 
-print(Fore.LIGHTMAGENTA_EX+"CLI Compass (https://github.com/cornflowerenderman/cli-compass)"+Style.RESET_ALL)
-print(Style.BRIGHT+Fore.LIGHTRED_EX+"This version is probably buggy! Use at your own risk"+Style.RESET_ALL)
-
 valid = compassLib.testIfValidSession(compassLib.urlPrefix,compassLib.cookies,compassLib.headers)
 if(valid==False):
-    print("config.json is invalid, trying to get cookies from browser")
-    compassLib.cookies = compassLib.getCookieFromBrowser(compassLib.school)
-    if(compassLib.cookies==None):
-        raise Exception("Could not authenticate! Fix config.json or log in on browser")
-    else:
-        valid = compassLib.testIfValidSession(compassLib.urlPrefix,compassLib.cookies,compassLib.headers)
-        if(valid):
-            print("Got valid cookies, updating config")
-            config = {"cookies":compassLib.cookies,"headers":compassLib.headers,"school":compassLib.school}
-            f = open("../config.json","w")
-            f.write(json.dumps(config))
-            f.close()
-        else:
-            raise Exception("Could not authenticate! Check config.json or log in again on browser")
+    raise Exception("Could not authenticate! Fix config.json or log in on browser")
 
 print(Fore.LIGHTMAGENTA_EX)
 userId = compassLib.getUserId()

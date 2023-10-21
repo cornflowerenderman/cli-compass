@@ -162,3 +162,8 @@ cython_debug/
 # Ignore config.json so you don't accidentally leak credentials
 
 config.json
+
+
+# Ignore __pycache__ in subfolders
+
+*/__pycache__/
