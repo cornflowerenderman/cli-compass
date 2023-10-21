@@ -29,7 +29,7 @@ To install run the following commands:
 ```
 
 ## Command line options
-
+```
 Features can be enabled or disabled by using different command line switches:
     --help:                 Shows help page (not implemented)
     --show-learning-tasks:  Shows learning tasks (not implemented, time expensive)
@@ -43,7 +43,7 @@ Features can be enabled or disabled by using different command line switches:
     --show-news:            Enables news (semi time expensive)
     --news-max n:           Sets max news entries (can sometimes increase speed)
     --no-fancy-links:       Disables web-style links (Use if not supported by your terminal)
-
+```
 ## TODO
     
     -  Better exception handling (mostly complete)
