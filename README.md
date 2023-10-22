@@ -31,7 +31,7 @@ To install run the following commands:
 ## Command line options
 ```
 Features can be enabled or disabled by using different command line switches:
-    --help:                 Shows help page (not implemented)
+    --help:                 Shows help page
     --show-learning-tasks:  Shows learning tasks (not implemented, time expensive)
     --show-chronicles:      Shows chronicles (not implemented)
     --show-events:          Shows events (not implemented)
