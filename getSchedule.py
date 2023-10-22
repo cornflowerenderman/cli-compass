@@ -4,6 +4,27 @@ import datetime
 
 args = sys.argv[1:] #Command line switches
 
+if ("--help" in args or "-h" in args):
+    help = """
+    Usage:
+      python3 getSchedule.py [options]
+
+    Options:
+      --help:                 Shows help page
+      --show-learning-tasks:  Shows learning tasks (not implemented, time expensive)
+      --show-chronicles:      Shows chronicles (not implemented)
+      --show-events:          Shows events (not implemented)
+      --nerd:                 Shows extra information that is useless to the average user
+      --no-schedule:          Disables schedule
+      --no-attendance:        Disables attendance
+      --no-auth-test:         Disables testing if valid login (not recommended)
+      --no-user-id:           Disables finding user-id (will break stuff, don't use)
+      --show-news:            Enables news (semi time expensive)
+      --news-max n:           Sets max news entries (can sometimes increase speed)
+      --no-fancy-links:       Disables web-style links (Use if not supported by your terminal)
+    """
+    print(help)
+    sys.exit()
 try:
     from colorama import Fore, Style
 except:
