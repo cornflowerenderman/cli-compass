@@ -49,6 +49,7 @@ Features can be enabled or disabled by using different command line switches:
     -  Better exception handling (mostly complete)
     -  Add learning tasks being shown on schedule
     -  Add events & chronicle entries
+    -  Add License
     -  More goals?
 
 ## Contributions
