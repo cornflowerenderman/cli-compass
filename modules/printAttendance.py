@@ -14,7 +14,7 @@ def printAttendance(attendance):
                 status=Fore.LIGHTGREEN_EX+Style.BRIGHT+status+Style.RESET_ALL
             elif(status!='Not Marked'):
                 status=Fore.LIGHTRED_EX+Style.BRIGHT+status+Style.RESET_ALL
-            elif(status=='Wellbeing') or ('Gen Edu'):
+            elif(status=='Wellbeing' or status=='Gen Edu'):
                 status=Fore.BLUE+Style.BRIGHT+status+Style.RESET_ALL
             temp.append(status)
         print("  "+(" - ".join(temp)))
