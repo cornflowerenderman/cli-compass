@@ -4,7 +4,7 @@ import datetime
 
 args = sys.argv[1:] #Command line switches
 
-if ("--help" in args or "-h" in args):
+if ("--help" in args or "-h" in args or "-" in args):
     help = """
     Usage:
       python3 getSchedule.py [options]
