@@ -1,5 +1,5 @@
 #!/bin/python3
-import sys
+import sys, requests
 import datetime
 
 args = sys.argv[1:] #Command line switches
@@ -48,6 +48,14 @@ from modules.printSchedule import printSchedule
 from modules.getNews import getAllNews
 from modules.printNews import printNews
 from modules.getChronicles import getChronicleFeed
+
+timeout = 1
+
+try:
+    requests.head("http://www.google.com/", timeout=timeout)
+except requests.ConnectionError:
+    print("The internet connection is down")
+    sys.exit()
 
 config = getConfig()
 cookies = config['cookies']

@@ -1,4 +1,4 @@
-import requests, json
+import json, requests
 from modules.timeConversion import convertNewsEntryTime
 from bs4 import BeautifulSoup
 
