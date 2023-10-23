@@ -32,7 +32,7 @@ To install run the following commands:
 ```
 Features can be enabled or disabled by using different command line switches:
     --help:                 Shows help page
-    --show-learning-tasks:  Shows learning tasks (not implemented, time expensive)
+    --show-learning-tasks:  Shows learning tasks (not implemented, time expensive for full list, part of schedule with new unimplemented API)
     --show-chronicles:      Shows chronicles (partially implemented, still buggy & also requires --i-know-what-im-doing)
     --chronicle-max n:      Sets max chronicle entries (don't set stupid values! Keep between 1-25)
     --show-events:          Shows events (not implemented)
