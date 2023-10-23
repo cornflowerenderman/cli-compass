@@ -47,3 +47,28 @@ Get learning tasks for class:
     POST /services/mobile/learningtasks.svc/GetAllTaskByGroupNameOfUserId
     Request: {"groupName": "<subjectName>\n<activityName>","userId": <redacted>}
     The request is a bit wierd, but otherwise does as expected
+
+Get upcoming:
+    (This is different to getting your schedule)
+    POST https://emeraldsc-vic.compass.education/Services/NewsFeed.svc/GetMyUpcoming?sessionstate=readonly
+    Request: {"userId":"<redacted>"}
+    This returns the "Upcoming temporary room change(s)" below the schedule
+
+Get chronicle categories:
+    GET https://emeraldsc-vic.compass.education/Services/ReferenceDataCache.svc/GetAllChronicleCategories?v=47b15586-ca7d-4100-8c20-c299a7e06128&page=1&start=0&limit=25
+    This returns a long list of each chronicle category, required to get chronicles
+
+Get chronicle content:
+    POST https://emeraldsc-vic.compass.education/Services/ChronicleV2.svc/GetUserChronicleFeedThin?sessionstate=readonly&_dc=1698012987575
+    Request: {"targetUserId":<redacted>,"start":0,"pageSize":5,"startDate":"YYYY-MM-DDTHH:MM:SS.000Z","endDate":"YYYY-MM-DDTHH:MM:SS.000Z","filterCategoryIds":[<long list obtained earlier>],"asParent":false,"page":1,"limit":25}
+
+Get chronicle security:
+    GET https://emeraldsc-vic.compass.education/Services/ReferenceDataCache.svc/GetChronicleSecurityLevels?sessionstate=readonly&v=12.5.19.2&page=1&start=0&limit=25
+    Returns a list of security levels for each chronicle
+
+Get chronicle rating:
+    GET https://emeraldsc-vic.compass.education/Services/ReferenceDataCache.svc/GetChronicleRatings?v=12.5.19.2&page=1&start=0&limit=25
+    Returns a list of chronicle ratings, used for identifying what colour a chronicle is supposed to be
+
+
+
