@@ -19,7 +19,8 @@ if ("--help" in args or "-h" in args or "-" in args):
       --no-schedule:          Disables schedule
       --no-attendance:        Disables attendance
       --no-auth-test:         Disables testing if valid login (not recommended)
-      --no-user-id:           Disables finding user-id (will break stuff, don't use)
+      --no-user-id:           Disables finding user-id (will break stuff, don't use, also requires --i-know-what-im-doing)
+      --i-know-what-im-doing  Makes sure you know what you're doing
       --show-news:            Enables news (semi time expensive)
       --news-max n:           Sets max news entries (can sometimes increase speed)
       --no-fancy-links:       Disables web-style links (Use if not supported by your terminal)
@@ -60,7 +61,7 @@ if("--no-auth-test" not in args):
         raise Exception("Could not authenticate! Fix config.json or log in on browser")
 
 userId = None
-if("--no-user-id" not in args):
+if("--no-user-id" not in args and "--i-know-what-im-doing" not in args):
     userInfo = getUserInfo(urlPrefix, cookies, headers)
     userId = userInfo['userId'] #Key piece of information for most requests
     userInfoPrintText = "Logged in as "+userInfo['name']+" ("+userInfo['username']
