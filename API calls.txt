@@ -29,9 +29,22 @@ Get learning task groups:
     This will return some values required to find each learning task
 
 Get schedule:
+    (Appears to now be deprecated)
     POST /services/mobile.svc/GetScheduleLinesForDate
     Request: {"date": "2038/01/19 02:14 PM","userId": <redacted>}
     This will return your entire schedule for a given day
+
+Get schedule (With learning tasks)
+    (This was with a recent Compass app update)
+    POST /services/mobile.svc/GetCalendarEventsByUser
+    Request: {
+        "start": "2023-10-23",
+        "finish": "2023-10-23",
+        "userId": 7435,
+        "homePage": true,
+        "isCalendar": true
+    }
+    This will return your schedule for a given day, along with learning tasks and events
 
 Get school details:
     POST https://devices.compass.education/services/admin.svc/GetSchoolDetailBasic
@@ -55,20 +68,24 @@ Get upcoming:
     This returns the "Upcoming temporary room change(s)" below the schedule
 
 Get chronicle categories:
-    GET https://emeraldsc-vic.compass.education/Services/ReferenceDataCache.svc/GetAllChronicleCategories?v=47b15586-ca7d-4100-8c20-c299a7e06128&page=1&start=0&limit=25
+    GET https://emeraldsc-vic.compass.education/Services/ReferenceDataCache.svc/GetAllChronicleCategories?v=<random uuid>&page=1&start=0&limit=25
     This returns a long list of each chronicle category, required to get chronicles
 
 Get chronicle content:
-    POST https://emeraldsc-vic.compass.education/Services/ChronicleV2.svc/GetUserChronicleFeedThin?sessionstate=readonly&_dc=1698012987575
+    POST https://emeraldsc-vic.compass.education/Services/ChronicleV2.svc/GetUserChronicleFeedThin?sessionstate=readonly&_dc=<unix time in milliseconds>
     Request: {"targetUserId":<redacted>,"start":0,"pageSize":5,"startDate":"YYYY-MM-DDTHH:MM:SS.000Z","endDate":"YYYY-MM-DDTHH:MM:SS.000Z","filterCategoryIds":[<long list obtained earlier>],"asParent":false,"page":1,"limit":25}
 
 Get chronicle security:
-    GET https://emeraldsc-vic.compass.education/Services/ReferenceDataCache.svc/GetChronicleSecurityLevels?sessionstate=readonly&v=12.5.19.2&page=1&start=0&limit=25
+    GET https://emeraldsc-vic.compass.education/Services/ReferenceDataCache.svc/GetChronicleSecurityLevels?sessionstate=readonly&page=1&start=0&limit=25
     Returns a list of security levels for each chronicle
 
 Get chronicle rating:
-    GET https://emeraldsc-vic.compass.education/Services/ReferenceDataCache.svc/GetChronicleRatings?v=12.5.19.2&page=1&start=0&limit=25
+    GET https://emeraldsc-vic.compass.education/Services/ReferenceDataCache.svc/GetChronicleRatings?page=1&start=0&limit=25
     Returns a list of chronicle ratings, used for identifying what colour a chronicle is supposed to be
+
+Get list of all staff:
+    POST https://emeraldsc-vic.compass.education/Services/User.svc/GetAllStaff?sessionstate=readonly&_dc=<unix time in milliseconds>
+    Returns a list of every staff member, used for chronicles
 
 
 

@@ -12,7 +12,8 @@ if ("--help" in args or "-h" in args or "-" in args):
     Options:
       --help:                 Shows help page
       --show-learning-tasks:  Shows learning tasks (not implemented, time expensive)
-      --show-chronicles:      Shows chronicles (not implemented)
+      --show-chronicles:      Shows chronicles (partially implemented, also requires --i-know-what-im-doing)
+      --chronicle-max n:      Sets max chronicle entries (don't set stupid values! Keep between 1-25)
       --show-events:          Shows events (not implemented)
       --nerd:                 Shows extra information that is useless to the average user
       --no-schedule:          Disables schedule
@@ -45,6 +46,7 @@ from modules.printAttendance import printAttendance
 from modules.printSchedule import printSchedule
 from modules.getNews import getAllNews
 from modules.printNews import printNews
+from modules.getChronicles import getChronicleFeed
 
 config = getConfig()
 cookies = config['cookies']
@@ -88,3 +90,23 @@ if("--show-news" in args):
             pass
     newsEntries = getAllNews(urlPrefix, cookies, headers, maxEntries)
     printNews(newsEntries)
+
+if(("--show-chronicles" in args) and ("--i-know-what-im-doing" in args)):
+    maxChronicles = 5
+    if('--chronicle-max' in args):
+        try:
+            maxChronicles = int(args[args[:-1].index('--chronicle-max')+1])
+        except:
+            pass
+    start = datetime.datetime(2023,1,1).timestamp()
+    end = datetime.datetime(2023,12,31).timestamp()
+    chronicleFeed = getChronicleFeed(urlPrefix,cookies,headers,userId,maxChronicles,start,end)
+    for a in chronicleFeed:
+        for i in a:
+            print(i["templateName"])
+            print("Recorded by [UserID:"+str(i['creatorId'])+"]")
+            print(i['text'])
+            print(i['categoryName'])
+            print("Recorded "+str(i['createdTime'])+", Occured "+str(i['occurredTime']))
+            print("~~~~~")
+        print()

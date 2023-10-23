@@ -32,8 +32,9 @@ To install run the following commands:
 ```
 Features can be enabled or disabled by using different command line switches:
     --help:                 Shows help page
-    --show-learning-tasks:  Shows learning tasks (not implemented, time expensive)
-    --show-chronicles:      Shows chronicles (not implemented)
+    --show-learning-tasks:  Shows learning tasks (not implemented, time expensive for full list, part of schedule with new unimplemented API)
+    --show-chronicles:      Shows chronicles (partially implemented, still buggy & also requires --i-know-what-im-doing)
+    --chronicle-max n:      Sets max chronicle entries (don't set stupid values! Keep between 1-25)
     --show-events:          Shows events (not implemented)
     --nerd:                 Shows extra information that is useless to the average user
     --no-schedule:          Disables schedule
@@ -48,7 +49,8 @@ Features can be enabled or disabled by using different command line switches:
     
     -  Better exception handling (mostly complete)
     -  Add learning tasks being shown on schedule
-    -  Add events & chronicle entries
+    -  Add events
+    -  Add chronicle entries (partially added, still buggy)
     -  Add License
     -  More goals?
 
