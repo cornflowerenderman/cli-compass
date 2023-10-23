@@ -33,3 +33,10 @@ def unixToShortTime(unix): #Accepts unix time and returns the time in format "HH
 def unixToTime(unix): #Accepts unix time and returns the time in format "DD Mmm HH:MM AM"
     return datetime.datetime.fromtimestamp(unix).strftime('%d %b, %I:%M %p')
 
+def unixToLongChronicleTime(unix): #Accepts unix time and returns the time in format "YYYY-MM-DDTHH:MM:SS.000Z"
+    return datetime.datetime.fromtimestamp(unix).strftime('%Y-%m-%dT%H:%M:%S.000Z')
+
+def chronicleTimeToUnix(timestamp): #Converts format "YYYY-MM-DDTHH:MM:SSZ" to unix
+    d = datetime.datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%SZ")
+    d = datetime.datetime(d.year,d.month,d.day,d.hour,d.minute,d.second, tzinfo=pytz.timezone("UTC"))
+    return int(d.timestamp())
