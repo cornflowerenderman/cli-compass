@@ -4,7 +4,7 @@ import datetime
 
 args = sys.argv[1:] #Command line switches
 
-if ("--help" in args or "-h" in args or "-" in args):
+if ("--help" in args or "-h" in args or "-" in args or "-?" in args or "/?" in args):
     help = """
     Usage:
       python3 getSchedule.py [options]
@@ -19,8 +19,7 @@ if ("--help" in args or "-h" in args or "-" in args):
       --no-schedule:          Disables schedule
       --no-attendance:        Disables attendance
       --no-auth-test:         Disables testing if valid login (not recommended)
-      --no-user-id:           Disables finding user-id (will break stuff, don't use, also requires --i-know-what-im-doing)
-      --i-know-what-im-doing  Makes sure you know what you're doing
+      --i-know-what-im-doing  Makes sure you know what you're doing (Features in development)
       --show-news:            Enables news (semi time expensive)
       --news-max n:           Sets max news entries (can sometimes increase speed)
       --no-fancy-links:       Disables web-style links (Use if not supported by your terminal)
@@ -69,14 +68,14 @@ if("--no-auth-test" not in args):
         raise Exception("Could not authenticate! Fix config.json or log in on browser")
 
 userId = None
-if("--no-user-id" not in args and "--i-know-what-im-doing" not in args):
-    userInfo = getUserInfo(urlPrefix, cookies, headers)
-    userId = userInfo['userId'] #Key piece of information for most requests
-    userInfoPrintText = "Logged in as "+userInfo['name']+" ("+userInfo['username']
-    if("--nerd" in args):
-        userInfoPrintText+=", "+str(userInfo['userId']) #--nerd enables UserID to be shown
-    print(Fore.LIGHTMAGENTA_EX+userInfoPrintText+")"+Style.RESET_ALL)
-    print()
+
+userInfo = getUserInfo(urlPrefix, cookies, headers)
+userId = userInfo['userId'] #Key piece of information for most requests
+userInfoPrintText = "Logged in as "+userInfo['name']+" ("+userInfo['username']
+if("--nerd" in args):
+    userInfoPrintText+=", "+str(userInfo['userId']) #--nerd enables UserID to be shown
+print(Fore.LIGHTMAGENTA_EX+userInfoPrintText+")"+Style.RESET_ALL)
+print()
 
 if("--no-attendance" not in args):
     attendance = getAttendance(urlPrefix, cookies, headers, userId)

@@ -40,10 +40,10 @@ Features can be enabled or disabled by using different command line switches:
     --no-schedule:          Disables schedule
     --no-attendance:        Disables attendance
     --no-auth-test:         Disables testing if valid login (not recommended)
-    --no-user-id:           Disables finding user-id (will break stuff, don't use)
     --show-news:            Enables news (semi time expensive)
     --news-max n:           Sets max news entries (can sometimes increase speed)
     --no-fancy-links:       Disables web-style links (Use if not supported by your terminal)
+    --i-know-what-im-doing  Makes sure you know what you're doing (Features in development)
 ```
 ## TODO
     
