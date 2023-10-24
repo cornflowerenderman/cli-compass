@@ -52,7 +52,6 @@ Features can be enabled or disabled by using different command line switches:
     -  Add learning tasks being shown on schedule
     -  Add events
     -  Add chronicle entries (partially added, still buggy)
-    -  Add License
     -  More goals?
 
 ## Contributions
