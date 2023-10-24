@@ -42,7 +42,7 @@ def writeJson(name,j):
     f.close()
 
 
-def getChronicleFeed(urlPrefix,cookies,headers,userId,pageSize,startTime,endTime):
+def getChronicleFeed(urlPrefix,cookies,headers,userId,pageSize,startTime,endTime,staffList):
     chronicleCats = getChronicleCategoriesStripped(urlPrefix,cookies, headers)
     chronicleRatings = getChronicleRatings(urlPrefix,cookies,headers)
     now = datetime.datetime.now()
@@ -83,16 +83,17 @@ def getChronicleFeed(urlPrefix,cookies,headers,userId,pageSize,startTime,endTime
                         value_raw = json.loads(j['value'])
                         value = ""
                         for z in value_raw:
-                            if(z['isChecked'] or "--chronicle-no" in args):
-                                value+=z['valueOption']+": "+('Yes' if z['isChecked'] else 'No')+"\n"
+                            if(z['isChecked']):
+                                value+="- "+z['valueOption']+": Yes\n"
                     except:
-                        value = j['value']
-                    text+=name+":\n"
-                    text+=value+"\n\n"
-                temp['text'] = text.strip()
+                        value = "- "+j['value']
+                    if(value != "- "):
+                        text+=name+":\n"
+                        text+=value+"\n\n"
+                temp['text'] = text.replace("\n\n","\n").replace("\n\n","\n").strip()
                 temp['isSickbay'] = a['sickbayEntry']
                 temp['templateName'] = a['templateName']
-                temp['creatorId'] = a['userIdCreator']
+                temp['creator'] = staffList[a['userIdCreator']]
                 chronicle.append(temp)
             chronicleOutput.append(chronicle)
         return chronicleOutput

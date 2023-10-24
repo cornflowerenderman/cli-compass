@@ -1,5 +1,5 @@
 #!/bin/python3
-import sys, requests, datetime
+import sys, requests, datetime, json
 
 from modules.getConfig import getConfig
 from modules.authTest import testAuth
@@ -105,6 +105,29 @@ if("--show-news" in args):
     newsEntries = getAllNews(urlPrefix, cookies, headers, maxEntries)
     printNews(newsEntries)
 
+
+
+def getStaffList(urlPrefix,cookies,headers):
+    now = datetime.datetime.now()
+    unixTimeMillis = int(now.timestamp()*1000)
+    url = urlPrefix + "/Services/User.svc/GetAllStaff?sessionstate=readonly&_dc="+str(unixTimeMillis)
+    payload = {"page":1,"start":0,"limit":25}
+    r = requests.post(url,json=payload,cookies=cookies,headers=headers)
+    if(r.ok):
+        j = json.loads(r.text)
+        output = {}        
+        for i in j['d']:
+            output[i['id']] = {
+                "name":i['n'],
+                "username":i['u'],
+                "photoId":i['pv'],
+                "startDate":i['start'],
+                "displayCode":i['displayCode']
+            }
+        return output
+    else:
+        raise Exception(r)
+
 if(("--show-chronicles" in args) and ("--i-know-what-im-doing" in args)):
     maxChronicles = 5
     if('--chronicle-max' in args):
@@ -114,13 +137,24 @@ if(("--show-chronicles" in args) and ("--i-know-what-im-doing" in args)):
             pass
     start = datetime.datetime(2023,1,1).timestamp()
     end = datetime.datetime(2023,12,31).timestamp()
-    chronicleFeed = getChronicleFeed(urlPrefix,cookies,headers,userId,maxChronicles,start,end)
+    staffList=getStaffList(urlPrefix,cookies,headers)
+    chronicleFeed = getChronicleFeed(urlPrefix,cookies,headers,userId,maxChronicles,start,end,staffList)
     for a in chronicleFeed:
         for i in a:
+            if(i['rating'] == 'Green'):
+                print(Fore.LIGHTGREEN_EX,end='')
+            elif(i['rating'] == 'Amber'):
+                print(Fore.LIGHTYELLOW_EX,end='')
+            elif(i['rating'] == 'Red'):
+                print(Fore.LIGHTRED_EX,end='')
+            elif(i['rating'] == 'Grey'):
+                print(Style.DIM,end='')
             print(i["templateName"])
-            print("Recorded by [UserID:"+str(i['creatorId'])+"]")
+            print("Recorded by "+i['creator']['name'])
             print(i['text'])
             print(i['categoryName'])
-            print("Recorded "+str(i['createdTime'])+", Occured "+str(i['occurredTime']))
-            print("~~~~~")
+            createdTime = datetime.datetime.fromtimestamp(i['createdTime']).strftime('%b %d %H:%M')
+            occurredTime = datetime.datetime.fromtimestamp(i['occurredTime']).strftime('%b %d %H:%M')
+            print("Recorded "+createdTime+", Occured "+occurredTime)
+            print("~~~~~"+Style.RESET_ALL)
         print()
