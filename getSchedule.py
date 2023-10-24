@@ -1,8 +1,29 @@
 #!/bin/python3
-import sys, requests
-import datetime
+import sys, requests, datetime
+
+from modules.getConfig import getConfig
+from modules.authTest import testAuth
+from modules.getAttendance import getAttendance
+from modules.getSchedule import getSchedule
+from modules.getUserInfo import getUserInfo
+from modules.timeConversion import findNextWeekday
+from modules.printAttendance import printAttendance
+from modules.printSchedule import printSchedule
+from modules.getNews import getAllNews
+from modules.printNews import printNews
+from modules.getChronicles import getChronicleFeed
+
+try:
+    from colorama import Fore, Style
+except:
+    raise Exception("Missing dependency: colorama")
 
 args = sys.argv[1:] #Command line switches
+
+print(Fore.LIGHTMAGENTA_EX+"Unofficial CLI Compass Education Client (https://github.com/cornflowerenderman/cli-compass)"+Style.RESET_ALL)
+print(Style.BRIGHT+Fore.LIGHTRED_EX+"This version is probably buggy! Use at your own risk!")
+print("We will not be responsible for any issues that may arise from using this client!")
+print(Style.RESET_ALL)
 
 if ("--help" in args or "-h" in args or "-" in args or "-?" in args or "/?" in args):
     help = """
@@ -23,38 +44,12 @@ if ("--help" in args or "-h" in args or "-" in args or "-?" in args or "/?" in a
       --show-news:            Enables news (semi time expensive)
       --news-max n:           Sets max news entries (can sometimes increase speed)
       --no-fancy-links:       Disables web-style links (Use if not supported by your terminal)
+      --no-net-test:          Disables checking for an internet connection
     """
     print(help)
     sys.exit()
-try:
-    from colorama import Fore, Style
-except:
-    raise Exception("Missing dependency: colorama")
 
-print(Fore.LIGHTMAGENTA_EX+"Unofficial CLI Compass Education Client (https://github.com/cornflowerenderman/cli-compass)"+Style.RESET_ALL)
-print(Style.BRIGHT+Fore.LIGHTRED_EX+"This version is probably buggy! Use at your own risk!")
-print("We will not be responsible for any issues that may arise from using this client!")
-print(Style.RESET_ALL)
 
-from modules.getConfig import getConfig
-from modules.authTest import testAuth
-from modules.getAttendance import getAttendance
-from modules.getSchedule import getSchedule
-from modules.getUserInfo import getUserInfo
-from modules.timeConversion import findNextWeekday
-from modules.printAttendance import printAttendance
-from modules.printSchedule import printSchedule
-from modules.getNews import getAllNews
-from modules.printNews import printNews
-from modules.getChronicles import getChronicleFeed
-
-timeout = 1
-
-try:
-    requests.head("http://www.google.com/", timeout=timeout)
-except requests.ConnectionError:
-    print("The internet connection is down")
-    sys.exit()
 
 config = getConfig()
 cookies = config['cookies']
@@ -62,12 +57,23 @@ headers = config['headers']
 
 urlPrefix = "https://"+config['school']+".compass.education"
 
+if("--no-net-test" not in args):
+    timeout = 1
+    try:
+        requests.head(urlPrefix, headers=headers, timeout=timeout)
+    except requests.ConnectionError:
+        print("Could not connect to compass")
+        try:
+            requests.head("http://one.one.one.one", timeout=timeout)
+            print("Connected to one.one.one.one, compass may be down")
+        except requests.ConnectionError:
+            print("Could not connect to one.one.one.one, check your internet connection")
+        sys.exit()
+
 if("--no-auth-test" not in args):
     valid = testAuth(urlPrefix,cookies,headers)
     if(valid==False):
         raise Exception("Could not authenticate! Fix config.json or log in on browser")
-
-userId = None
 
 userInfo = getUserInfo(urlPrefix, cookies, headers)
 userId = userInfo['userId'] #Key piece of information for most requests

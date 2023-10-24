@@ -44,6 +44,7 @@ Features can be enabled or disabled by using different command line switches:
     --news-max n:           Sets max news entries (can sometimes increase speed)
     --no-fancy-links:       Disables web-style links (Use if not supported by your terminal)
     --i-know-what-im-doing  Makes sure you know what you're doing (Features in development)
+    --no-net-test:          Disables checking for an internet connection
 ```
 ## TODO
     
