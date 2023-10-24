@@ -151,11 +151,21 @@ if(("--show-chronicles" in args) and ("--i-know-what-im-doing" in args)):
             elif(i['rating'] == 'Grey'):
                 print(Style.DIM,end='')
             print(i["templateName"])
-            print("Recorded by "+i['creator']['name'])
+            creator = i['creator']
+            if('name' in creator):
+                print("Recorded by "+i['creator']['name'])
+            else:
+                print("Recorded by "+i['creator'])
+            if(i['points']!=0):            
+                points = str(i['points'])
+                if(i['points']>0):
+                    points = "+"+points
+                print(points+" points")
             print(i['text'])
-            print(i['categoryName'])
-            createdTime = datetime.datetime.fromtimestamp(i['createdTime']).strftime('%b %d %H:%M')
-            occurredTime = datetime.datetime.fromtimestamp(i['occurredTime']).strftime('%b %d %H:%M')
+            if(i['categoryName']!=""):  #Used on comments
+                print(i['categoryName'])
+            createdTime = datetime.datetime.fromtimestamp(i['createdTime']).strftime('%b %d, %H:%M')
+            occurredTime = datetime.datetime.fromtimestamp(i['occurredTime']).strftime('%b %d, %H:%M')
             print("Recorded "+createdTime+", Occured "+occurredTime)
             print("~~~~~"+Style.RESET_ALL)
         print()

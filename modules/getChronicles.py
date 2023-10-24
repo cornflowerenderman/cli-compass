@@ -80,20 +80,27 @@ def getChronicleFeed(urlPrefix,cookies,headers,userId,pageSize,startTime,endTime
                 for j in a['inputFields']:
                     name = j['name']
                     try:
+                        #TODO: Sickbay chronicles have time in format 2007-12-31T23:17:00.000Z when they should be converted to 10:17 AM
                         value_raw = json.loads(j['value'])
-                        value = ""
-                        for z in value_raw:
-                            if(z['isChecked']):
-                                value+="- "+z['valueOption']+": Yes\n"
+                        try:
+                            value = ""
+                            for z in value_raw:
+                                if(z['isChecked']):
+                                    value+="- "+z['valueOption']+": Yes\n"
+                        except:
+                            value="- "
                     except:
                         value = "- "+j['value']
                     if(value != "- "):
                         text+=name+":\n"
                         text+=value+"\n\n"
-                temp['text'] = text.replace("\n\n","\n").replace("\n\n","\n").strip()
+                temp['text'] = text.replace("\n\n","\n").replace("\n\n","\n").replace(".:",":").strip()
                 temp['isSickbay'] = a['sickbayEntry']
                 temp['templateName'] = a['templateName']
-                temp['creator'] = staffList[a['userIdCreator']]
+                if(a['userIdCreator'] in staffList):
+                    temp['creator'] = staffList[a['userIdCreator']]
+                else:
+                    temp['creator'] = "[UserID:"+str(a['userIdCreator'])+"]" #Not in staff list
                 chronicle.append(temp)
             chronicleOutput.append(chronicle)
         return chronicleOutput
