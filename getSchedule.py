@@ -45,8 +45,6 @@ if ("--help" in args or "-h" in args or "-" in args or "-?" in args or "/?" in a
     print(help)
     sys.exit()
 
-
-
 config = getConfig()
 cookies = config['cookies']
 headers = config['headers']
@@ -59,12 +57,11 @@ if("--no-net-test" not in args):
         requests.head(urlPrefix, headers=headers, timeout=timeout)
     except requests.ConnectionError:
         try:
-            requests.head("http://one.one.one.one", timeout=timeout)
-            print("Connected to one.one.one.one, compass may be down")
+            requests.head("www.google.com", timeout=timeout)
+            print("Connected to www.google.com, compass may be down")
         except requests.ConnectionError:
-            print("Could not connect to one.one.one.one or compass, check your internet connection and try again")
+            print("Could not connect to www.google.com or compass, check your internet connection and try again")
         sys.exit()
-
 
 print(Fore.LIGHTMAGENTA_EX+"Unofficial CLI Compass Education Client (https://github.com/cornflowerenderman/cli-compass)"+Style.RESET_ALL)
 print(Style.BRIGHT+Fore.LIGHTRED_EX+"This version is probably buggy! Use at your own risk!")
