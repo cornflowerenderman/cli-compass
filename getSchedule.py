@@ -57,10 +57,10 @@ if("--no-net-test" not in args):
         requests.head(urlPrefix, headers=headers, timeout=timeout)
     except requests.ConnectionError:
         try:
-            requests.head("www.google.com", timeout=timeout)
-            print("Connected to www.google.com, compass may be down")
+            requests.head("https://www.google.com", timeout=timeout)
+            print("Connected to https://www.google.com, compass may be down")
         except requests.ConnectionError:
-            print("Could not connect to www.google.com or compass, check your internet connection and try again")
+            print("Could not connect to https://www.google.com or compass, check your internet connection and try again")
         sys.exit()
 
 print(Fore.LIGHTMAGENTA_EX+"Unofficial CLI Compass Education Client (https://github.com/cornflowerenderman/cli-compass)"+Style.RESET_ALL)
