@@ -1,4 +1,5 @@
 #!/bin/python3
+
 import sys, requests, datetime, json
 
 from modules.getConfig import getConfig
@@ -19,11 +20,6 @@ except:
     raise Exception("Missing dependency: colorama")
 
 args = sys.argv[1:] #Command line switches
-
-print(Fore.LIGHTMAGENTA_EX+"Unofficial CLI Compass Education Client (https://github.com/cornflowerenderman/cli-compass)"+Style.RESET_ALL)
-print(Style.BRIGHT+Fore.LIGHTRED_EX+"This version is probably buggy! Use at your own risk!")
-print("We will not be responsible for any issues that may arise from using this client!")
-print(Style.RESET_ALL)
 
 if ("--help" in args or "-h" in args or "-" in args or "-?" in args or "/?" in args):
     help = """
@@ -62,13 +58,18 @@ if("--no-net-test" not in args):
     try:
         requests.head(urlPrefix, headers=headers, timeout=timeout)
     except requests.ConnectionError:
-        print("Could not connect to compass")
         try:
             requests.head("http://one.one.one.one", timeout=timeout)
             print("Connected to one.one.one.one, compass may be down")
         except requests.ConnectionError:
-            print("Could not connect to one.one.one.one, check your internet connection")
+            print("Could not connect to one.one.one.one or compass, check your internet connection and try again")
         sys.exit()
+
+
+print(Fore.LIGHTMAGENTA_EX+"Unofficial CLI Compass Education Client (https://github.com/cornflowerenderman/cli-compass)"+Style.RESET_ALL)
+print(Style.BRIGHT+Fore.LIGHTRED_EX+"This version is probably buggy! Use at your own risk!")
+print("We will not be responsible for any issues that may arise from using this client!")
+print(Style.RESET_ALL)
 
 if("--no-auth-test" not in args):
     valid = testAuth(urlPrefix,cookies,headers)
