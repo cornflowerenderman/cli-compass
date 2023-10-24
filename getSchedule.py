@@ -13,6 +13,7 @@ from modules.printSchedule import printSchedule
 from modules.getNews import getAllNews
 from modules.printNews import printNews
 from modules.getChronicles import getChronicleFeed
+from modules.doRequests import doPostRequest
 
 try:
     from colorama import Fore, Style
@@ -105,26 +106,22 @@ if("--show-news" in args):
 
 
 
-def getStaffList(urlPrefix,cookies,headers):
+def getStaffList(urlPrefix,cookies):
     now = datetime.datetime.now()
     unixTimeMillis = int(now.timestamp()*1000)
     url = urlPrefix + "/Services/User.svc/GetAllStaff?sessionstate=readonly&_dc="+str(unixTimeMillis)
     payload = {"page":1,"start":0,"limit":25}
-    r = requests.post(url,json=payload,cookies=cookies,headers=headers)
-    if(r.ok):
-        j = json.loads(r.text)
-        output = {}        
-        for i in j['d']:
-            output[i['id']] = {
-                "name":i['n'],
-                "username":i['u'],
-                "photoId":i['pv'],
-                "startDate":i['start'],
-                "displayCode":i['displayCode']
-            }
-        return output
-    else:
-        raise Exception(r)
+    j = doPostRequest(url,cookies,payload)
+    output = {}        
+    for i in j['d']:
+        output[i['id']] = {
+            "name":i['n'],
+            "username":i['u'],
+            "photoId":i['pv'],
+            "startDate":i['start'],
+            "displayCode":i['displayCode']
+        }
+    return output
 
 if(("--show-chronicles" in args) and ("--i-know-what-im-doing" in args)):
     maxChronicles = 5
@@ -135,8 +132,8 @@ if(("--show-chronicles" in args) and ("--i-know-what-im-doing" in args)):
             pass
     start = datetime.datetime(2023,1,1).timestamp()
     end = datetime.datetime(2023,12,31).timestamp()
-    staffList=getStaffList(urlPrefix,cookies,headers)
-    chronicleFeed = getChronicleFeed(urlPrefix,cookies,headers,userId,maxChronicles,start,end,staffList)
+    staffList=getStaffList(urlPrefix,cookies)
+    chronicleFeed = getChronicleFeed(urlPrefix,cookies,userId,maxChronicles,start,end,staffList)
     for a in chronicleFeed:
         for i in a:
             if(i['rating'] == 'Green'):
@@ -148,11 +145,21 @@ if(("--show-chronicles" in args) and ("--i-know-what-im-doing" in args)):
             elif(i['rating'] == 'Grey'):
                 print(Style.DIM,end='')
             print(i["templateName"])
-            print("Recorded by "+i['creator']['name'])
+            creator = i['creator']
+            if('name' in creator):
+                print("Recorded by "+i['creator']['name'])
+            else:
+                print("Recorded by "+i['creator'])
+            if(i['points']!=0):            
+                points = str(i['points'])
+                if(i['points']>0):
+                    points = "+"+points
+                print(points+" points")
             print(i['text'])
-            print(i['categoryName'])
-            createdTime = datetime.datetime.fromtimestamp(i['createdTime']).strftime('%b %d %H:%M')
-            occurredTime = datetime.datetime.fromtimestamp(i['occurredTime']).strftime('%b %d %H:%M')
+            if(i['categoryName']!=""):  #Used on comments
+                print(i['categoryName'])
+            createdTime = datetime.datetime.fromtimestamp(i['createdTime']).strftime('%b %d, %H:%M')
+            occurredTime = datetime.datetime.fromtimestamp(i['occurredTime']).strftime('%b %d, %H:%M')
             print("Recorded "+createdTime+", Occured "+occurredTime)
             print("~~~~~"+Style.RESET_ALL)
         print()
