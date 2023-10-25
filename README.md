@@ -1,5 +1,7 @@
 # cli-compass
+
 ## This project is unofficial and won't support all schools using Compass
+
 ### We will not be responsible for any bans/data leaks/damage/trouble/etc. caused by this project
 ### You have been warned and you use this client at your own risk!
 
@@ -29,6 +31,7 @@ To install run the following commands:
 ```
 
 ## Command line options
+
 ```
 Features can be enabled or disabled by using different command line switches:
     --help:                 Shows help page
@@ -45,6 +48,7 @@ Features can be enabled or disabled by using different command line switches:
     --no-fancy-links:       Disables web-style links (Use if not supported by your terminal)
     --i-know-what-im-doing  Makes sure you know what you're doing (Features in development)
     --no-net-test:          Disables checking for an internet connection
+    --all-week              Shows schedule for the entire week
 ```
 ## TODO
     
@@ -55,7 +59,7 @@ Features can be enabled or disabled by using different command line switches:
     -  More goals?
 
 ## Contributions
+
 Pull requests and issues are welcomed, as they can help us to improve this client and fix bugs
 
 If you want to contact me personally (Eg. you are part of Compass and want me to take down this code), contact me here: cornflowerenderman _*at*_ duck.com
-
