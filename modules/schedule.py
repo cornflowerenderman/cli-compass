@@ -30,16 +30,16 @@ def getSchedule(urlPrefix, cookies, headers, startDate, endDate, userId): #Accep
             entry["allDay"]=i["allDay"]
             entry["attendanceMode"]=i["attendanceMode"]
             entry["colour"]=i["backgroundColor"]
-            rawInfo = i["topAndBottomLine"].split(" - ")
-            if(len(rawInfo)==5):
-                entry["class"] = rawInfo[2]
-                entry["location"] = rawInfo[3].split(" ")[-1]
-                entry["teacher"]=rawInfo[4].split(" ")[-1]
+            rawInfo = i["bottomTitleLine"].split(" - ")
+            if(len(rawInfo)==4):
+                entry["class"] = rawInfo[1]
+                entry["location"] = rawInfo[2].split(" ")[-1]
+                entry["teacher"]=rawInfo[3].split(" ")[-1]
             else:
-                if(len(rawInfo)>1):
-                    entry["info"]=" - ".join(rawInfo[1:])
+                if(entry['id']==None):
+                    entry["info"]=", ".join(i["bottomTitleLine"].split(", ")[1:]) #Remove name from learning task
                 else:
-                    entry["info"]=i["topAndBottomLine"]
+                    entry["info"]=i["bottomTitleLine"]
             schedule.append(entry)
         schedule = sorted(schedule, key=lambda k: k['type'], reverse=True)
         schedule = sorted(schedule, key=lambda k: k['start'], reverse=False)            
