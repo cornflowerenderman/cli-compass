@@ -88,18 +88,15 @@ if("--no-attendance" not in args):
 
 if("--no-schedule" not in args):
     if("--all-week" in args):
-        date = datetime.date.today()
-        for i in range(5): #Hacky solution, fix coming
-            schedule = getSchedule(urlPrefix,cookies,headers,date,date,userId)
-            printSchedule(urlPrefix, today, schedule)
-            day = findNextWeekday(day)
+        startDate = datetime.date.today()
+        endDate = startDate + datetime.timedelta(days=4)
+        schedule = getSchedule(urlPrefix,cookies,headers,startDate,endDate,userId)
+        printSchedule(urlPrefix, schedule)
     else:
         today = datetime.date.today()
-        schedule = getSchedule(urlPrefix,cookies,headers,today,today,userId)
-        printSchedule(urlPrefix, today, schedule)
-        next_day = findNextWeekday(today)
-        schedule = getSchedule(urlPrefix,cookies,headers,next_day,next_day,userId)
-        printSchedule(urlPrefix, next_day, schedule)
+        tommorrow = today + datetime.timedelta(days=1)
+        schedule = getSchedule(urlPrefix,cookies,headers,today,tommorrow,userId)
+        printSchedule(urlPrefix, schedule)
 
 if("--show-news" in args):
     maxEntries = -1

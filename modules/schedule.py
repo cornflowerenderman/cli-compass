@@ -47,12 +47,12 @@ def getSchedule(urlPrefix, cookies, headers, startDate, endDate, userId): #Accep
     else:
         raise Exception(j['technicalMessage'])
 
-def printSchedule(urlPrefix, date, schedule):
+def printSchedule(urlPrefix, schedule):
     today = datetime.date.today()
-    if(date==today):
-        print(Fore.LIGHTCYAN_EX+"Today's schedule:"+Style.RESET_ALL)
-    else:
-        print(Fore.LIGHTCYAN_EX+date.strftime("%A")+"'s schedule:"+Style.RESET_ALL)
+    tommorrow = today + datetime.timedelta(days=1)
+    #today = datetime.datetime(today.year,today.month,today.day,0,0)
+    currDay = today
+    print(Fore.LIGHTCYAN_EX+"Today's schedule:"+Style.RESET_ALL)
     if(len(schedule)>0):
         widest = 1
         for i in schedule:
@@ -62,6 +62,15 @@ def printSchedule(urlPrefix, date, schedule):
         teacherWidth = max(widest-17,4)
         schedule[4]['rollMarked'] = False
         for i in schedule:
+            schedDate = datetime.datetime.fromtimestamp(i['start'])
+            schedDate = datetime.date(schedDate.year,schedDate.month,schedDate.day)
+            if(currDay<schedDate):
+                print("")
+                currDay = schedDate
+                if(currDay>tommorrow):
+                    print(Fore.LIGHTCYAN_EX+currDay.strftime("%A")+"'s schedule:"+Style.RESET_ALL)
+                else:
+                    print(Fore.LIGHTCYAN_EX+"Tommorrow's schedule:"+Style.RESET_ALL)
             start = unixToShortTime(i['start'])
             url = None
             if(i['id']==None):
