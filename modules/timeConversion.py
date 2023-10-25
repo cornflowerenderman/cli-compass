@@ -18,7 +18,7 @@ def convertAttendanceTime(timestamp): #Converts attendance timestamp to unix tim
     return int(d.timestamp())
 
 def convertScheduleTime(timestamp): #Converts schedule timestamp to unix time
-    return int(datetime.datetime.strptime(timestamp, "%d/%m/%Y - %I:%M %p").timestamp())
+    return int(datetime.datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%SZ").timestamp())
 
 
 def findNextWeekday(day):     #Accepts a datetime object

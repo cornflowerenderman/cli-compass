@@ -6,20 +6,23 @@ from modules.printLink import getFancyLink
 
 args = sys.argv[1:]
 
-def getSchedule(urlPrefix, cookies, headers, date, userId): #Accepts a datetime date and your UserID
+def getSchedule(urlPrefix, cookies, headers, startDate, endDate, userId): #Accepts a datetime date and your UserID
     payload = {
-        "date":date.strftime("%Y/%m/%d %I:%M %p"),
-        "userId": userId
+        "start": startDate.strftime("%Y-%m-%d"),
+        "finish": endDate.strftime("%Y-%m-%d"),
+        "userId": userId,
+        "homePage": True,
+        "isCalendar": True
     }
-    j = doPostRequest(urlPrefix+"/services/mobile.svc/GetScheduleLinesForDate",cookies,payload)
+    j = doPostRequest(urlPrefix+"/services/mobile.svc/GetCalendarEventsByUser",cookies,payload)
     success = j['d']['success']
     if(success):
         rawSchedule = j['d']['data']
         schedule = []
         for i in rawSchedule:
             entry = {}
-            entry["start"]=convertScheduleTime(i["start"])
-            entry["end"]=convertScheduleTime(i["finish"])
+            entry["start"]=convertScheduleTime(i["startDateTime"])
+            entry["end"]=convertScheduleTime(i["finishDateTime"])
             entry["id"]=i["instanceId"]
             entry["running"]=i["runningStatus"]==1
             entry["rollMarked"]=i["rollMarked"]
@@ -60,9 +63,13 @@ def printSchedule(urlPrefix, date, schedule):
         schedule[4]['rollMarked'] = False
         for i in schedule:
             start = unixToShortTime(i['start'])
-            url = urlPrefix+"/Organise/Activities/Activity.aspx#session/"+i['id'] #Convert sessionId to clickable URL
-            if("--no-fancy-links" not in args):
-                url = "Session ID: "+getFancyLink(i['id'],url)
+            url = None
+            if(i['id']==None):
+                url = "[Learning task]"
+            else:
+                url = urlPrefix+"/Organise/Activities/Activity.aspx#session/"+i['id'] #Convert sessionId to clickable URL
+                if("--no-fancy-links" not in args):
+                    url = "Session ID: "+getFancyLink(i['id'],url)
             startLetter = '# ' if i['type']==1 else '  '
             if("info" in i):
                 info = i['info']

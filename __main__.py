@@ -88,27 +88,17 @@ if("--no-attendance" not in args):
 
 if("--no-schedule" not in args):
     if("--all-week" in args):
-        today = datetime.date.today()
-        schedule = getSchedule(urlPrefix,cookies,headers,today,userId)
-        printSchedule(urlPrefix, today, schedule)
-        next_day = findNextWeekday(today)
-        schedule = getSchedule(urlPrefix,cookies,headers,next_day,userId)
-        printSchedule(urlPrefix, next_day, schedule)
-        dayThree = findNextWeekday(next_day)
-        schedule = getSchedule(urlPrefix,cookies,headers,dayThree,userId)
-        printSchedule(urlPrefix, dayThree, schedule)
-        dayFour = findNextWeekday(dayThree)
-        schedule = getSchedule(urlPrefix,cookies,headers,dayFour,userId)
-        printSchedule(urlPrefix, dayFour, schedule)
-        dayFive = findNextWeekday(dayFour)
-        schedule = getSchedule(urlPrefix,cookies,headers,dayFive,userId)
-        printSchedule(urlPrefix, dayFive, schedule)
+        date = datetime.date.today()
+        for i in range(5): #Hacky solution, fix coming
+            schedule = getSchedule(urlPrefix,cookies,headers,date,date,userId)
+            printSchedule(urlPrefix, today, schedule)
+            day = findNextWeekday(day)
     else:
         today = datetime.date.today()
-        schedule = getSchedule(urlPrefix,cookies,headers,today,userId)
+        schedule = getSchedule(urlPrefix,cookies,headers,today,today,userId)
         printSchedule(urlPrefix, today, schedule)
         next_day = findNextWeekday(today)
-        schedule = getSchedule(urlPrefix,cookies,headers,next_day,userId)
+        schedule = getSchedule(urlPrefix,cookies,headers,next_day,next_day,userId)
         printSchedule(urlPrefix, next_day, schedule)
 
 if("--show-news" in args):
@@ -120,8 +110,6 @@ if("--show-news" in args):
             pass
     newsEntries = getAllNews(urlPrefix, cookies, headers, maxEntries)
     printNews(newsEntries)
-
-
 
 def getStaffList(urlPrefix,cookies):
     now = datetime.datetime.now()
@@ -147,8 +135,8 @@ if(("--show-chronicles" in args) and ("--i-know-what-im-doing" in args)):
             maxChronicles = int(args[args[:-1].index('--chronicle-max')+1])
         except:
             pass
-    start = datetime.datetime(2023,1,1).timestamp()
-    end = datetime.datetime(2023,12,31).timestamp()
+    start = datetime.datetime(datetime.date.today().year,1,1).timestamp()
+    end = datetime.datetime(datetime.date.today().year,12,31).timestamp()
     staffList=getStaffList(urlPrefix,cookies)
     chronicleFeed = getChronicleFeed(urlPrefix,cookies,userId,maxChronicles,start,end,staffList)
     for a in chronicleFeed:

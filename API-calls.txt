@@ -1,0 +1,91 @@
+Documentation on some API calls that I have found by intercepting the official app's HTTPS calls
+Useless calls such as for telemetry, language information, etc. haven't been included
+
+Get latest app version:
+    (Doesn't require cookies)
+    GET https://cdn.compass.education/android/latestVersion.txt
+    Returns an integer and if an update is forced
+
+Get user personal details:
+    (Can be used to obtain your UserId, which is required for some requests)
+    POST /services/mobile.svc/GetMobilePersonalDetails
+    Request: ""
+    Returns name, email, dob, etc. including various id values
+
+Test authentication:
+    POST /services/mobile.svc/TestAuth
+    Request: ""
+    Appears to test if the current cookies are valid (eg. not signed out)
+
+Get news page:
+    POST /services/mobile.svc/GetNewsFeedPaged
+    Request: {"page": 1}
+    Returns a page of your news feed, and if there are further pages
+
+Get learning task groups:
+    (This is basically just a list of each class)
+    POST /services/mobile/learningtasks.svc/GetAllGroupsOfTasksByUserId
+    Request: {"userId": <redacted>,"guidRequired": true}
+    This will return some values required to find each learning task
+
+Get schedule:
+    (Appears to now be deprecated)
+    POST /services/mobile.svc/GetScheduleLinesForDate
+    Request: {"date": "2038/01/19 02:14 PM","userId": <redacted>}
+    This will return your entire schedule for a given day
+
+Get schedule (With learning tasks)
+    (This was with a recent Compass app update)
+    POST /services/mobile.svc/GetCalendarEventsByUser
+    Request: {
+        "start": "YYYY-MM-DD",
+        "finish": "YYYY-MM-DD",
+        "userId": <UserId>,
+        "homePage": true,
+        "isCalendar": true
+    }
+    This will return your schedule for a given day, along with learning tasks and events
+
+Get school details:
+    POST https://devices.compass.education/services/admin.svc/GetSchoolDetailBasic
+    Request: {"schoolName": "<redacted> Secondary College"}
+    Returns some non-critical values, mostly unused for student mode
+
+Get user details:
+    POST /services/mobile.svc/GetUserDetails
+    Request: {"userId": 7435}
+    Returns mostly redundant info about the user, but also returns attendance
+
+Get learning tasks for class:
+    POST /services/mobile/learningtasks.svc/GetAllTaskByGroupNameOfUserId
+    Request: {"groupName": "<subjectName>\n<activityName>","userId": <redacted>}
+    The request is a bit wierd, but otherwise does as expected
+
+Get upcoming:
+    (This is different to getting your schedule)
+    POST https://emeraldsc-vic.compass.education/Services/NewsFeed.svc/GetMyUpcoming?sessionstate=readonly
+    Request: {"userId":"<redacted>"}
+    This returns the "Upcoming temporary room change(s)" below the schedule
+
+Get chronicle categories:
+    GET https://emeraldsc-vic.compass.education/Services/ReferenceDataCache.svc/GetAllChronicleCategories?v=<random uuid>&page=1&start=0&limit=25
+    This returns a long list of each chronicle category, required to get chronicles
+
+Get chronicle content:
+    POST https://emeraldsc-vic.compass.education/Services/ChronicleV2.svc/GetUserChronicleFeedThin?sessionstate=readonly&_dc=<unix time in milliseconds>
+    Request: {"targetUserId":<redacted>,"start":0,"pageSize":5,"startDate":"YYYY-MM-DDTHH:MM:SS.000Z","endDate":"YYYY-MM-DDTHH:MM:SS.000Z","filterCategoryIds":[<long list obtained earlier>],"asParent":false,"page":1,"limit":25}
+
+Get chronicle security:
+    GET https://emeraldsc-vic.compass.education/Services/ReferenceDataCache.svc/GetChronicleSecurityLevels?sessionstate=readonly&page=1&start=0&limit=25
+    Returns a list of security levels for each chronicle
+
+Get chronicle rating:
+    GET https://emeraldsc-vic.compass.education/Services/ReferenceDataCache.svc/GetChronicleRatings?page=1&start=0&limit=25
+    Returns a list of chronicle ratings, used for identifying what colour a chronicle is supposed to be
+
+Get list of all staff:
+    POST https://emeraldsc-vic.compass.education/Services/User.svc/GetAllStaff?sessionstate=readonly&_dc=<unix time in milliseconds>
+    Returns a list of every staff member, used for chronicles
+
+
+
