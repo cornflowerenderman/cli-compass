@@ -2,16 +2,13 @@
 
 import sys, requests, datetime, json
 
+from modules.attendance import getAttendance, printAttendance
+from modules.schedule import getSchedule, printSchedule
+from modules.news import getAllNews, printNews
 from modules.getConfig import getConfig
 from modules.authTest import testAuth
-from modules.getAttendance import getAttendance
-from modules.getSchedule import getSchedule
 from modules.getUserInfo import getUserInfo
 from modules.timeConversion import findNextWeekday
-from modules.printAttendance import printAttendance
-from modules.printSchedule import printSchedule
-from modules.getNews import getAllNews
-from modules.printNews import printNews
 from modules.getChronicles import getChronicleFeed
 from modules.doRequests import doPostRequest
 
@@ -65,10 +62,12 @@ if("--no-net-test" not in args):
             print("Could not connect to https://www.google.com or compass, check your internet connection and try again")
         sys.exit()
 
-print(Fore.LIGHTMAGENTA_EX+"Unofficial CLI Compass Education Client (https://github.com/cornflowerenderman/cli-compass)"+Style.RESET_ALL)
-print(Style.BRIGHT+Fore.LIGHTRED_EX+"This version is probably buggy! Use at your own risk!")
-print("We will not be responsible for any issues that may arise from using this client!")
-print(Style.RESET_ALL)
+if("--hide-header" not in args):
+    print(Fore.LIGHTMAGENTA_EX+"Unofficial CLI Compass Education Client (https://github.com/cornflowerenderman/cli-compass)"+Style.RESET_ALL)
+    print(Style.BRIGHT+Fore.LIGHTRED_EX+"This version is probably buggy! Use at your own risk!")
+    print("We will not be responsible for any issues that may arise from using this client!")
+    print(Fore.LIGHTMAGENTA_EX+"Use --hide-header to hide this warning"+Style.RESET_ALL)
+    print(Style.RESET_ALL)
 
 if("--no-auth-test" not in args):
     valid = testAuth(urlPrefix,cookies,headers)
