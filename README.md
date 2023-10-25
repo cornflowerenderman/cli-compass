@@ -52,14 +52,14 @@ Features can be enabled or disabled by using different command line switches:
 ```
 ## TODO
     
-    -  Better exception handling (mostly complete)
-    -  Add learning tasks being shown on schedule
+    -  Better exception handling (mostly complete apart for a few sections)
+    -  Add learning tasks CLI switch
     -  Add events
-    -  Add chronicle entries (partially added, still buggy)
+    -  Add chronicle entries (mostly added, still buggy)
     -  More goals?
 
 ## Contributions
 
 Pull requests and issues are welcomed, as they can help us to improve this client and fix bugs
 
-If you want to contact me personally (Eg. you are part of Compass and want me to take down this code), contact me here: cornflowerenderman _*at*_ duck.com
+If you want to contact me personally (Eg. you are part of Compass and want me to take down this code), contact me here: cornflowerenderman \*at\* duck.com
