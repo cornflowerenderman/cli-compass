@@ -42,6 +42,7 @@ if ("--help" in args or "-h" in args or "-" in args or "-?" in args or "/?" in a
       --news-max n:           Sets max news entries (can sometimes increase speed)
       --no-fancy-links:       Disables web-style links (Use if not supported by your terminal)
       --no-net-test:          Disables checking for an internet connection
+      --all-week              Shows schedule for the entire week
     """
     print(help)
     sys.exit()
@@ -87,12 +88,29 @@ if("--no-attendance" not in args):
     printAttendance(attendance)
 
 if("--no-schedule" not in args):
-    today = datetime.date.today()
-    schedule = getSchedule(urlPrefix,cookies,headers,today,userId)
-    printSchedule(urlPrefix, today, schedule)
-    next_day = findNextWeekday(today)
-    schedule = getSchedule(urlPrefix,cookies,headers,next_day,userId)
-    printSchedule(urlPrefix, next_day, schedule)
+    if("--all-week" in args):
+        today = datetime.date.today()
+        schedule = getSchedule(urlPrefix,cookies,headers,today,userId)
+        printSchedule(urlPrefix, today, schedule)
+        next_day = findNextWeekday(today)
+        schedule = getSchedule(urlPrefix,cookies,headers,next_day,userId)
+        printSchedule(urlPrefix, next_day, schedule)
+        dayThree = findNextWeekday(next_day)
+        schedule = getSchedule(urlPrefix,cookies,headers,dayThree,userId)
+        printSchedule(urlPrefix, dayThree, schedule)
+        dayFour = findNextWeekday(dayThree)
+        schedule = getSchedule(urlPrefix,cookies,headers,dayFour,userId)
+        printSchedule(urlPrefix, dayFour, schedule)
+        dayFive = findNextWeekday(dayFour)
+        schedule = getSchedule(urlPrefix,cookies,headers,dayFive,userId)
+        printSchedule(urlPrefix, dayFive, schedule)
+    else:
+        today = datetime.date.today()
+        schedule = getSchedule(urlPrefix,cookies,headers,today,userId)
+        printSchedule(urlPrefix, today, schedule)
+        next_day = findNextWeekday(today)
+        schedule = getSchedule(urlPrefix,cookies,headers,next_day,userId)
+        printSchedule(urlPrefix, next_day, schedule)
 
 if("--show-news" in args):
     maxEntries = -1
