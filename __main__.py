@@ -70,7 +70,7 @@ else:
         print(Fore.LIGHTMAGENTA_EX+"Unofficial CLI Compass Education Client (https://github.com/cornflowerenderman/cli-compass)"+Style.RESET_ALL)
         print(Style.BRIGHT+Fore.LIGHTRED_EX+"This version is probably buggy! Use at your own risk!")
         print("We will not be responsible for any issues that may arise from using this client!")
-        print(Fore.LIGHTMAGENTA_EX+"Use --hide-header to hide this warning"+Style.RESET_ALL)
+        print(Fore.LIGHTMAGENTA_EX+"Use --hide-header to hide this warning or set hide-warning to true in your config.json"+Style.RESET_ALL)
         print(Style.RESET_ALL)
 
 if("--no-auth-test" not in args):
