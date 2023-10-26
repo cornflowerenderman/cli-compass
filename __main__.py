@@ -169,3 +169,7 @@ if(("--show-chronicles" in args) and ("--i-know-what-im-doing" in args)):
             print("Recorded "+createdTime+", Occured "+occurredTime)
             print("~~~~~"+Style.RESET_ALL)
         print()
+
+elif(("--show-chronicles" in args) and ("--i-know-what-im-doing" not in args)):
+    print(Fore.LIGHTRED_EX+"--i-know-what-im-doing needs to be added to run use this option")
+    print(Style.RESET_ALL)
