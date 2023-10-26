@@ -56,6 +56,7 @@ Features can be enabled or disabled by using different command line switches:
     -  Add learning tasks CLI switch
     -  Add events
     -  Add chronicle entries (mostly added, still buggy)
+    -  Make interactive (VIm bindings maybe?)
     -  More goals?
 
 ## Contributions
