@@ -99,7 +99,7 @@ if("--no-schedule" not in args):
         printSchedule(urlPrefix, schedule)
 
 if("--show-news" in args):
-    maxEntries = -1
+    maxEntries = 3
     if("--news-max" in args):
         try:
             maxEntries = int(args[args[:-1].index('--news-max')+1])
@@ -126,10 +126,10 @@ def getStaffList(urlPrefix,cookies):
     return output
 
 if(("--show-chronicles" in args) and ("--i-know-what-im-doing" in args)):
-    maxChronicles = 5
+    maxChronicles = 1
     if('--chronicle-max' in args):
         try:
-            maxChronicles = int(args[args[:-1].index('--chronicle-max')+1])
+            maxChronicles = max(int(args[args[:-1].index('--chronicle-max')+1]),1)
         except:
             pass
     start = datetime.datetime(datetime.date.today().year,1,1).timestamp()
