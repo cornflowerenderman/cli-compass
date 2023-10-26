@@ -47,6 +47,7 @@ if ("--help" in args or "-h" in args or "-" in args or "-?" in args or "/?" in a
 config = getConfig()
 cookies = config['cookies']
 headers = config['headers']
+hideWarning = config['hide-warning']
 
 urlPrefix = "https://"+config['school']+".compass.education"
 
@@ -62,12 +63,15 @@ if("--no-net-test" not in args):
             print("Could not connect to https://www.google.com or compass, check your internet connection and try again")
         sys.exit()
 
-if("--hide-header" not in args):
-    print(Fore.LIGHTMAGENTA_EX+"Unofficial CLI Compass Education Client (https://github.com/cornflowerenderman/cli-compass)"+Style.RESET_ALL)
-    print(Style.BRIGHT+Fore.LIGHTRED_EX+"This version is probably buggy! Use at your own risk!")
-    print("We will not be responsible for any issues that may arise from using this client!")
-    print(Fore.LIGHTMAGENTA_EX+"Use --hide-header to hide this warning"+Style.RESET_ALL)
-    print(Style.RESET_ALL)
+if(hideWarning == True):
+    print("No warning needed")
+else:
+    if("--hide-warning" not in args):
+        print(Fore.LIGHTMAGENTA_EX+"Unofficial CLI Compass Education Client (https://github.com/cornflowerenderman/cli-compass)"+Style.RESET_ALL)
+        print(Style.BRIGHT+Fore.LIGHTRED_EX+"This version is probably buggy! Use at your own risk!")
+        print("We will not be responsible for any issues that may arise from using this client!")
+        print(Fore.LIGHTMAGENTA_EX+"Use --hide-header to hide this warning"+Style.RESET_ALL)
+        print(Style.RESET_ALL)
 
 if("--no-auth-test" not in args):
     valid = testAuth(urlPrefix,cookies,headers)
