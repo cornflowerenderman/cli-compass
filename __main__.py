@@ -64,7 +64,9 @@ if("--no-net-test" not in args):
         sys.exit()
 
 if(hideWarning == True):
-    print("No warning needed")
+    print()
+    print(Fore.WHITE+"Unofficial CLI Compass Education Client (https://github.com/cornflowerenderman/cli-compass)")
+    print()
 else:
     if("--hide-warning" not in args):
         print(Fore.LIGHTMAGENTA_EX+"Unofficial CLI Compass Education Client (https://github.com/cornflowerenderman/cli-compass)"+Style.RESET_ALL)
