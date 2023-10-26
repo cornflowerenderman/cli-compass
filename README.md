@@ -48,7 +48,8 @@ Features can be enabled or disabled by using different command line switches:
     --no-fancy-links:       Disables web-style links (Use if not supported by your terminal)
     --i-know-what-im-doing  Makes sure you know what you're doing (Features in development)
     --no-net-test:          Disables checking for an internet connection
-    --all-week              Shows schedule for the entire week
+    --all-week:             Shows schedule for the entire week
+    --interactive:          Interactive mode (not implemented)
 ```
 ## TODO
     
@@ -56,6 +57,7 @@ Features can be enabled or disabled by using different command line switches:
     -  Add learning tasks CLI switch
     -  Add events
     -  Add chronicle entries (mostly added, still buggy)
+    -  Create interactive mode as an option (Vim bindings maybe?)
     -  More goals?
 
 ## Contributions
