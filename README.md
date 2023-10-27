@@ -14,7 +14,7 @@ Since this client is just text-based, it loads significantly faster than the off
 
 ## Installation
 
-To install run the following commands:
+To use run the following commands:
 
 ``` shell
     # clone the repo
@@ -58,6 +58,7 @@ Features can be enabled or disabled by using different command line switches:
     -  Add events
     -  Add chronicle entries (mostly added, still buggy)
     -  Create interactive mode as an option (Vim bindings maybe?)
+    -  Add a proper installation method
     -  More goals?
 
 ## Contributions
