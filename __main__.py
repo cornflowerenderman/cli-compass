@@ -1,5 +1,9 @@
 #!/bin/python3
 
+#Copyright (c) 2023 cornflowerenderman - All Rights Reserved
+#You may use, distribute and modify this code under the terms of the MIT license
+#You should have received a copy of the MIT license with this file. If not, please visit https://mit-license.org/:
+
 import sys, requests, datetime, json
 
 from modules.attendance import getAttendance, printAttendance
