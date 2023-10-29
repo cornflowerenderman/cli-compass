@@ -29,21 +29,21 @@ if ("--help" in args or "-h" in args or "-" in args or "-?" in args or "/?" in a
       python3 getSchedule.py [options]
 
     Options:
-      --help:                 Shows help page
-      --show-learning-tasks:  Shows learning tasks (not implemented, time expensive)
-      --show-chronicles:      Shows chronicles (partially implemented, also requires --i-know-what-im-doing)
-      --chronicle-max n:      Sets max chronicle entries (don't set stupid values! Keep between 1-25)
-      --show-events:          Shows events (not implemented)
-      --nerd:                 Shows extra information that is useless to the average user
-      --no-schedule:          Disables schedule
-      --no-attendance:        Disables attendance
-      --no-auth-test:         Disables testing if valid login (not recommended)
-      --i-know-what-im-doing  Makes sure you know what you're doing (Features in development)
-      --show-news:            Enables news (semi time expensive)
-      --news-max n:           Sets max news entries (can sometimes increase speed)
-      --no-fancy-links:       Disables web-style links (Use if not supported by your terminal)
-      --no-net-test:          Disables checking for an internet connection
-      --all-week              Shows schedule for the entire week
+      [--help] [-h] [-] [?] [-?] [/?]:  Shows help page
+      --show-learning-tasks:            Shows learning tasks (not implemented, time expensive)
+      --show-chronicles:                Shows chronicles (partially implemented, also requires --i-know-what-im-doing)
+      --chronicle-max n:                Sets max chronicle entries (don't set stupid values! Keep between 1-25)
+      --show-events:                    Shows events (not implemented)
+      --nerd:                           Shows extra information that is useless to the average user
+      --no-schedule:                    Disables schedule
+      --no-attendance:                  Disables attendance
+      --no-auth-test:                   Disables testing if valid login (not recommended)
+      --i-know-what-im-doing            Makes sure you know what you're doing (Features in development)
+      --show-news:                      Enables news (semi time expensive)
+      --news-max n:                     Sets max news entries (can sometimes increase speed)
+      --no-fancy-links:                 Disables web-style links (Use if not supported by your terminal)
+      --no-net-test:                    Disables checking for an internet connection
+      --all-week                        Shows schedule for the entire week
     """
     print(help)
     sys.exit()
