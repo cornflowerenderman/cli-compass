@@ -50,9 +50,8 @@ def getSchedule(urlPrefix, cookies, headers, startDate, endDate, userId): #Accep
 def printSchedule(urlPrefix, schedule):
     today = datetime.date.today()
     tommorrow = today + datetime.timedelta(days=1)
-    #today = datetime.datetime(today.year,today.month,today.day,0,0)
-    currDay = today
-    print(Fore.LIGHTCYAN_EX+"Today's schedule:"+Style.RESET_ALL)
+    printed = False
+    currDay = datetime.date(1990,1,1)
     if(len(schedule)>0):
         widest = 1
         for i in schedule:
@@ -65,8 +64,11 @@ def printSchedule(urlPrefix, schedule):
             schedDate = datetime.datetime.fromtimestamp(i['start'])
             schedDate = datetime.date(schedDate.year,schedDate.month,schedDate.day)
             if(currDay<schedDate):
-                print("")
+                if(printed):
+                    print("")
                 currDay = schedDate
+                if(currDay==today):
+                    print(Fore.LIGHTCYAN_EX+"Today's schedule:"+Style.RESET_ALL)
                 if(currDay>tommorrow):
                     print(Fore.LIGHTCYAN_EX+currDay.strftime("%A")+"'s schedule:"+Style.RESET_ALL)
                 else:
@@ -88,6 +90,7 @@ def printSchedule(urlPrefix, schedule):
                 stuff = [start,i['class'],i['location'],i['teacher'],url]
                 entryColour = Fore.LIGHTCYAN_EX if i['rollMarked'] else Fore.LIGHTYELLOW_EX
                 print(entryColour+(startLetter+'{:8} | {:8} - {:3} - {:'+str(teacherWidth)+'} | {:>4}').format(*stuff)+Style.RESET_ALL)
+            printed = True
     else:
         print("  [Nothing]")
     print()
