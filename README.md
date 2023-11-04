@@ -8,7 +8,7 @@
 
 ## About
 
-This is an unofficial command line based Compass Education client, that uses reverse-engineered API calls to retreive various pieces of information.
+This is an unofficial command line-based Compass Education client, that uses reverse-engineered API calls to retrieve various pieces of information.
 
 Since this client is just text-based, it loads significantly faster than the official client without all of the extra visuals
 
@@ -52,12 +52,13 @@ Features can be enabled or disabled by using different command line switches:
 ```
 ## TODO
     
-    -  Better exception handling (mostly complete apart for a few sections)
+    -  Better exception handling (mostly complete apart from a few sections)
     -  Add learning tasks CLI switch
     -  Add events
     -  Add chronicle entries (mostly added, still buggy)
     -  Create interactive mode as an option (Vim bindings maybe?)
     -  Add a proper installation method
+    -  Get user feedback
     -  More goals?
 
 ## Contributions
