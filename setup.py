@@ -15,5 +15,5 @@ setup(
     author='cornflowerenderman',
     author_email='cornflowerenderman@duck.com',
     python_requires='>=3.8.0',
-    install_requires=['pytz','colorama', 'browser-cookie3', 'beautifulsoup4']
+    install_requires=['pytz>=2023.3.post1', 'colorama>=0.4.6', 'browser-cookie3>=0.19.1', 'beautifulsoup4>=4.12.2']
 )
