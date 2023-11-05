@@ -57,7 +57,7 @@ Features can be enabled or disabled by using different command line switches:
     -  Add events
     -  Add chronicle entries (mostly added, still buggy)
     -  Create interactive mode as an option (Vim bindings maybe?)
-    -  Add a proper installation method
+    -  Add a proper installation method (Semi complete)
     -  Get user feedback
     -  More goals?
 
