@@ -27,7 +27,7 @@ To use run the following commands:
     $ python3 -m pip install -r requirements.txt
 
     # execute program
-    $ python3 getSchedule.py
+    $ python3 __main__.py
 ```
 
 ## Command line options
