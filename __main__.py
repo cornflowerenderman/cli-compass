@@ -104,8 +104,8 @@ if("--no-schedule" not in args):
         printSchedule(urlPrefix, schedule)
     else:
         today = datetime.date.today()
-        tommorrow = today + datetime.timedelta(days=1)
-        schedule = getSchedule(urlPrefix,cookies,headers,today,tommorrow,userId)
+        Tomorrow = today + datetime.timedelta(days=1)
+        schedule = getSchedule(urlPrefix,cookies,headers,today,Tomorrow,userId)
         printSchedule(urlPrefix, schedule)
 
 if("--show-news" in args):

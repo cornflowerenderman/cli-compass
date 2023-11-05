@@ -49,7 +49,7 @@ def getSchedule(urlPrefix, cookies, headers, startDate, endDate, userId): #Accep
 
 def printSchedule(urlPrefix, schedule):
     today = datetime.date.today()
-    tommorrow = today + datetime.timedelta(days=1)
+    Tomorrow = today + datetime.timedelta(days=1)
     printed = False
     currDay = datetime.date(1990,1,1)
     if(len(schedule)>0):
@@ -69,10 +69,10 @@ def printSchedule(urlPrefix, schedule):
                 currDay = schedDate
                 if(currDay==today):
                     print(Fore.LIGHTCYAN_EX+"Today's schedule:"+Style.RESET_ALL)
-                if(currDay>tommorrow):
+                if(currDay>Tomorrow):
                     print(Fore.LIGHTCYAN_EX+currDay.strftime("%A")+"'s schedule:"+Style.RESET_ALL)
                 else:
-                    print(Fore.LIGHTCYAN_EX+"Tommorrow's schedule:"+Style.RESET_ALL)
+                    print(Fore.LIGHTCYAN_EX+"Tomorrow's schedule:"+Style.RESET_ALL)
             start = unixToShortTime(i['start'])
             url = None
             if(i['id']==None):
