@@ -53,7 +53,6 @@ Features can be enabled or disabled by using different command line switches:
 ## TODO
     
     -  Better exception handling (mostly complete apart from a few sections)
-    -  Add learning tasks CLI switch
     -  Add events
     -  Add chronicle entries (mostly added, still buggy)
     -  Create interactive mode as an option (Vim bindings maybe?)
