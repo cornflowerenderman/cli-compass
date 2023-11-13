@@ -80,6 +80,8 @@ def getConfig(): #This function is a bit of a mess
         if(config['cookies']==None):
             raise Exception("Could not find any cookies")
     if(len(config['cookies']['ASP.NET_SessionId'])!=36):
+        if(config['school']=='<Redacted>'):
+            config['school'] = askSchoolName()
         config['cookies'] = getCookieFromBrowser(config['school'])
         if(config['cookies']==None):
             raise Exception("Could not find any cookies")
