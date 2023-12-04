@@ -44,6 +44,9 @@ def updateConfig(config): #Overwrites config with new values
     f.write(json.dumps(config))
     f.close()
 
+def askCookie():
+    print("Could not find any cookies")
+    return {"ASP.NET_SessionId":input("Enter ASP.NET_SessionID cookie: ")}
 
 def getConfig(): #This function is a bit of a mess
     #First look for config.json in current folder, then parent
@@ -59,7 +62,7 @@ def getConfig(): #This function is a bit of a mess
             headers = {"User-Agent":userAgent}
             cookies = getCookieFromBrowser(school)
             if(cookies == None):
-                raise Exception("Could not find any cookies")
+                cookies=askCookie()
             config=  {"cookies":cookies,"headers":headers,"school":school}
             updateConfig(config)
             return config
@@ -74,17 +77,17 @@ def getConfig(): #This function is a bit of a mess
     if("cookies" not in config):
         config['cookies'] = getCookieFromBrowser(config['school'])
         if(config['cookies']==None):
-            raise Exception("Could not find any cookies")
+            config['cookies']=askCookie()
     if(config['cookies']=={} or config['cookies']==None):
         config['cookies'] = getCookieFromBrowser(config['school'])
         if(config['cookies']==None):
-            raise Exception("Could not find any cookies")
+            config['cookies']=askCookie()
     if(len(config['cookies']['ASP.NET_SessionId'])!=36):
         if(config['school']=='<Redacted>'):
             config['school'] = askSchoolName()
         config['cookies'] = getCookieFromBrowser(config['school'])
         if(config['cookies']==None):
-            raise Exception("Could not find any cookies")
+            config['cookies']=askCookie()
     updateConfig(config)
     return config
 
